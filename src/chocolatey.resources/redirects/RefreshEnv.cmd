@@ -11,7 +11,7 @@
 ::echo "RefreshEnv.cmd only works from cmd.exe, please install the Chocolatey Profile to take advantage of refreshenv from PowerShell"
 echo | set /p dummy="Refreshing environment variables from registry for cmd.exe. Please wait..."
 
-goto main
+for /f " tokens=2 delims=:" %%a in ( 'chcp' ) do ( chcp 65001 > nul && call :main && chcp %%~a > nul && goto :eof )
 
 :: Set one environment variable from registry key
 :SetFromReg
