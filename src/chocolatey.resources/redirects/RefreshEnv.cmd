@@ -11,7 +11,9 @@
 ::echo "RefreshEnv.cmd only works from cmd.exe, please install the Chocolatey Profile to take advantage of refreshenv from PowerShell"
 echo | set /p dummy="Refreshing environment variables from registry for cmd.exe. Please wait..."
 
-for /f " tokens=2 delims=:" %%a in ( 'chcp' ) do ( chcp 65001 > nul && call :main && chcp %%~a > nul && goto :eof )
+for /f "tokens=2 delims=:" %%a in ( 'chcp' ) do ( chcp 65001 > nul & call :main & chcp %%~a > nul & goto :eof )
+:: Just to be shure we newer steps into other functions even if for fails.
+goto :eof
 
 :: Set one environment variable from registry key
 :SetFromReg
