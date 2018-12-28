@@ -16,7 +16,8 @@ echo | set /p dummy="Refreshing environment variables from registry for cmd.exe.
 for /f "tokens=2 delims=:" %%a in ( 'chcp' ) do (
     chcp 65001 > nul
     call :main
-    chcp %%~a > nul )
+    chcp %%~a > nul
+)
 goto :EOF
 
 :: Set one environment variable from registry key
