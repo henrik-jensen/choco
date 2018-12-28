@@ -11,12 +11,13 @@
 ::echo "RefreshEnv.cmd only works from cmd.exe, please install the Chocolatey Profile to take advantage of refreshenv from PowerShell"
 echo | set /p dummy="Refreshing environment variables from registry for cmd.exe. Please wait..."
 
-for /f " tokens=2 delims=:" %%a in ( 'chcp' ) do (
+:: Ensure we read potential unicode env. vars. correctly.
+::   Breakdown: Save current chcp in %%a, change it to unicode (chcp 65001), refresh (through main), restore old chcp, and quit.
+for /f "tokens=2 delims=:" %%a in ( 'chcp' ) do (
     chcp 65001 > nul
     call :main
-    chcp %%~a > nul
-    goto :eof
-)
+    chcp %%~a > nul )
+goto :EOF
 
 :: Set one environment variable from registry key
 :SetFromReg
@@ -67,3 +68,4 @@ for /f " tokens=2 delims=:" %%a in ( 'chcp' ) do (
 
     echo | set /p dummy="Finished."
     echo .
+    goto :EOF
